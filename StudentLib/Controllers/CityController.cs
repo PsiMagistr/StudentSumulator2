@@ -1,6 +1,7 @@
 ﻿using StudentLib.classes;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace StudentLib.Controllers
             Load("test.dat");
             if(CurrentCity == null)
             {
-                CreateNewCity(width, height, camerawidth, visible);                
+                CreateNewCity(width, height, camerawidth/*, visible*/);                
             }
         }
 
@@ -29,9 +30,27 @@ namespace StudentLib.Controllers
             Save(filename, CurrentCity);
         }
 
-        public void CreateNewCity(int width, int height, int camerawidth, bool visible)
+        public void JsonSave(string filename)
         {
-            CurrentCity = new City(width, height, camerawidth, visible);
+            JsonSave(filename, CurrentCity);
+        }
+
+        public void setValues(Point coords, string name, string colorname, bool passability, bool activity)
+        {
+            CurrentCity[coords.Y, coords.X].Name = name;
+            CurrentCity[coords.Y, coords.X].Color = Color.FromName(colorname);           
+            CurrentCity[coords.Y, coords.X].Passability = passability;
+            CurrentCity[coords.Y, coords.X].Activity = activity;
+        }        
+
+        public void CreateNewCity(int width, int height, int camerawidth/*, bool visible*/)
+        {
+            CurrentCity = new City(width, height, camerawidth/*, visible*/);
+        }
+
+        public void CreateNewCity(int width, int height, int camerawidth, string name, bool passability, bool activity, Color color/*, bool visible*/)
+        {
+            CurrentCity = new City(width, height, camerawidth, name, passability, activity, color);
         }
     }
 }

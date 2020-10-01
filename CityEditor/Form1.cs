@@ -17,18 +17,42 @@ namespace CityEditor
         private CityController cityController;        
         private int Count = 0;
         private Boolean StartDrawing = false;
-      //  enum Colors { Color. };
-        public void Draw(Graphics g, int size)
-       {
+        private bool Border = false;
+        private Point coords;
+        private void getCoords(int mouseX, int mouseY)
+        {
+            int X = Count * cityController.CurrentCity.CameraWidth + (mouseX / 21);
+            int Y = mouseY / 21;
+            if (X > cityController.CurrentCity.CameraWidth * (Count + 1) - 1)
+            {
+                X = cityController.CurrentCity.CameraWidth - 1;
+            }
+            else if (X < 0)
+            {
+                X = 0;
+            }
+            if (Y > cityController.CurrentCity.Height - 1)
+            {
+                Y = cityController.CurrentCity.Height - 1;
+            }
+            else if (Y < 0)
+            {
+                Y = 0;
+            }            
+            coords = new Point(X,Y);
+        }
+
+        private void Draw(Graphics g, int size)
+        {
             int start;
-            int finish;
+            int finish;            
             if (cityController.CurrentCity != null)
             {
                 start = Count * cityController.CurrentCity.CameraWidth;
                 finish = (Count + 1) * cityController.CurrentCity.CameraWidth;
-
+               // MessageBox.Show(cityController.CurrentCity.VisibleNumbers.ToString());
                 if (cityController.CurrentCity.VisibleNumbers)
-                {
+                {                   
                     using (var sf = new StringFormat())
                     {
                         sf.Alignment = StringAlignment.Center;
@@ -37,26 +61,35 @@ namespace CityEditor
                         for (int y = 0; y < cityController.CurrentCity.Height; y++)
                         {
                             for (int x = start; x < finish; x++)
-                            {
+                            {                                
                                 g.FillRectangle(new SolidBrush(cityController.CurrentCity[y, x].Color), (x * size + 1 * (x + 1)) - (start * size) - start + 1, y * size + 1 * (y + 1), size, size);
+                                                             
                                 if (cityController.CurrentCity[y, x].WaveIndex > 0)
                                 {                                    
                                     g.DrawString((cityController.CurrentCity[y, x].WaveIndex).ToString(), f, Brushes.Black, new RectangleF((x * size + 1 * (x + 1)) - (start * size) - start + 1, y * size + 1 * (y + 1), size, size), sf);
-                                }
+                                }                                
                             }
+                        }
+                        if (Border)
+                        {
+                            g.DrawRectangle(new Pen(Color.Black), (coords.X * size + 1 * (coords.X + 1)) - (start * size) - start + 1, coords.Y * size + 1 * (coords.Y + 1), size, size);
                         }
                     }
                 }
                 else
-                {
-                   
+                {                  
                         for (int y = 0; y < cityController.CurrentCity.Height; y++)
                         {
                             for (int x = start; x < finish; x++)
-                            {
-                                g.FillRectangle(new SolidBrush(cityController.CurrentCity[y, x].Color), (x * size + 1 * (x + 1)) - (start * size) - start + 1, y * size + 1 * (y + 1), size, size);                                
-                            }
+                            {                           
+                            g.FillRectangle(new SolidBrush(cityController.CurrentCity[y, x].Color), (x * size + 1 * (x + 1)) - (start * size) - start + 1, y * size + 1 * (y + 1), size, size);                                                  
                         }
+                        if (Border)
+                        {
+                            g.DrawRectangle(new Pen(Color.Black), (coords.X * size + 1 * (coords.X + 1)) - (start * size) - start + 1, coords.Y * size + 1 * (coords.Y + 1), size, size);                          // Border = false;
+                            
+                        }
+                    }
                 }
 
                 
@@ -87,13 +120,25 @@ namespace CityEditor
 
         private void btncreate_Click(object sender, EventArgs e)
         {
-            int width = (int)nwidth.Value * (int)nfactor.Value;
-            int height = (int)nheight.Value;
-            int camerawidth = (int)nwidth.Value;
-            cityController.CreateNewCity(width, height, camerawidth, true);
-
-            lblmessage.Text = cityController.CurrentCity.Width.ToString();           
-            scena.Invalidate();
+            try
+            {
+                int width = (int)nwidth.Value * (int)nfactor.Value;
+                int height = (int)nheight.Value;
+                int camerawidth = (int)nwidth.Value;
+                //cityController.CreateNewCity(width, height, camerawidth/*, true*/);
+                string name = txtParticalName.Text;
+                bool passability = chpassability.Checked;
+                bool activity = chactivity.Checked;
+                Color color = Color.FromName(ListColors.SelectedItem.ToString());               
+                cityController.CreateNewCity(width, height, camerawidth, name, passability, activity, color);
+                lblmessage.Text = cityController.CurrentCity.Width.ToString();
+                scena.Invalidate();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+           
         }
 
         private void scena_Paint(object sender, PaintEventArgs e)
@@ -108,40 +153,46 @@ namespace CityEditor
         }
 
         private void scena_MouseDown(object sender, MouseEventArgs e)
-        {
+        {            
             StartDrawing = true;
+            if(ListColors.SelectedIndex == 0)
+            {                
+                Border = true;               
+                getCoords(e.X, e.Y);
+                txtParticalName.Text = cityController.CurrentCity[coords.Y, coords.X].Name;
+                chpassability.Checked = cityController.CurrentCity[coords.Y, coords.X].Passability;
+                chactivity.Checked = cityController.CurrentCity[coords.Y, coords.X].Activity;
+                scena.Invalidate();
+            }
+            else
+            {
+                Border = false;
+            }            
         }
 
         private void scena_MouseUp(object sender, MouseEventArgs e)
         {
-            StartDrawing = false;
+            StartDrawing = false;         
         }
 
         private void scena_MouseMove(object sender, MouseEventArgs e)
         {
 
             if (StartDrawing)
-            {
-                int X = Count * cityController.CurrentCity.CameraWidth + (e.X / 21);
-                int Y = e.Y / 21;
-                if(X > cityController.CurrentCity.CameraWidth * (Count +1) - 1)
+            {                              
+                getCoords(e.X, e.Y);              
+                if (ListColors.SelectedIndex > 0)
                 {
-                    X = cityController.CurrentCity.CameraWidth - 1;
-                }
-                else if (X < 0)
-                {
-                    X = 0;
-                }
-                
-                if (Y > cityController.CurrentCity.Height - 1)
-                {
-                    Y = cityController.CurrentCity.Height -1;
-                }
-                else if(Y < 0)
-                {
-                    Y = 0;
-                }
-                cityController.CurrentCity[Y, X].Color = Color.FromName(ListColors.SelectedItem.ToString());
+                    try
+                    {
+                        cityController.setValues(coords, txtParticalName.Text, ListColors.SelectedItem.ToString(), chpassability.Checked, chactivity.Checked);
+                    }
+                    catch (Exception ex)
+                    {
+                        StartDrawing = false;
+                        MessageBox.Show(ex.Message);
+                    }
+                }               
                 scena.Invalidate();
             }
         }
@@ -178,13 +229,34 @@ namespace CityEditor
             int height = (int)nheight.Value;
             int camerawidth = (int)nwidth.Value;
             cityController = new CityController(width, height, camerawidth, true);
-            
+            ListColors.Items.Add("Выделение");
             foreach (var color in Enum.GetNames(typeof(KnownColor)))
             {
+               // if(color.ToString().Compare("AliceBlue"))
                 ListColors.Items.Add(color);                
             }
-            ListColors.SelectedIndex = 0;
+            ListColors.SelectedIndex = 0;            
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            //cityController.JsonSave("test.json");
+            cityController.CurrentCity.VisibleNumbers = true;
+            cityController.CurrentCity[1, 1].WaveIndex = 1;
+            scena.Invalidate();
+        }
+
+        private void btnchangecata_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                cityController.CurrentCity[coords.Y, coords.X].Name = txtParticalName.Text;
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
