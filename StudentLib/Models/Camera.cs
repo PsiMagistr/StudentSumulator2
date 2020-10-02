@@ -8,10 +8,7 @@ namespace StudentLib.classes
 {
     public class Camera
     {
-        public City city { get; set; }
-        public Camera()
-        {
-
-        }
+        public City City { get; set; }
+        public int Delta { get; set; } = 5;
     }
 }

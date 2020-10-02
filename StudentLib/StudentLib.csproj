@@ -46,11 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CityController.cs" />
     <Compile Include="Controllers\Saver.cs" />
+    <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Models\Camera.cs" />
     <Compile Include="Models\City.cs" />
     <Compile Include="Models\Partical.cs" />
+    <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

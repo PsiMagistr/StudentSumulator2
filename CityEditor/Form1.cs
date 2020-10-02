@@ -228,7 +228,7 @@ namespace CityEditor
             int width = (int)nwidth.Value * (int)nfactor.Value;
             int height = (int)nheight.Value;
             int camerawidth = (int)nwidth.Value;
-            cityController = new CityController(width, height, camerawidth, true);
+            cityController = new CityController(width, height, camerawidth);
             ListColors.Items.Add("Выделение");
             foreach (var color in Enum.GetNames(typeof(KnownColor)))
             {

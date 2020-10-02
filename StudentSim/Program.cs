@@ -16,7 +16,7 @@ namespace StudentSim
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frm_simulator());
+            Application.Run(new FrmRegistration());
         }
     }
 }

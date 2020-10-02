@@ -48,8 +48,7 @@ namespace StudentLib.classes
                 {
                     Map[y][x] = new Partical();
                 }
-            }
-           
+            }           
         }
 
         public City(

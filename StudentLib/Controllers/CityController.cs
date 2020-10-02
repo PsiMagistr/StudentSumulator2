@@ -11,7 +11,16 @@ namespace StudentLib.Controllers
     public class CityController:Saver
     {
         public City CurrentCity { get; set; }
-        public CityController(int width, int height, int camerawidth, bool visible)
+        public CityController()
+        {
+            Load("test.dat");
+            if(CurrentCity == null)
+            {
+                throw new Exception("Карта не может быть загружена");
+            }
+        }
+
+        public CityController(int width, int height, int camerawidth)
         {
             Load("test.dat");
             if(CurrentCity == null)
@@ -30,10 +39,10 @@ namespace StudentLib.Controllers
             Save(filename, CurrentCity);
         }
 
-        public void JsonSave(string filename)
+      /*  public void JsonSave(string filename)
         {
             JsonSave(filename, CurrentCity);
-        }
+        }*/
 
         public void setValues(Point coords, string name, string colorname, bool passability, bool activity)
         {

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentLib", "StudentLib\St
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CityEditor", "CityEditor\CityEditor.csproj", "{BB6AD75F-A53F-40AB-BCCC-75CA1B74B91F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentSim", "StudentSim\StudentSim.csproj", "{3F19433D-7D09-4440-8177-3806B50ACA60}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StudentSim", "StudentSim\StudentSim.csproj", "{BA6A67EA-CA70-4A2C-B12C-2F5DB4A118AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{BB6AD75F-A53F-40AB-BCCC-75CA1B74B91F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB6AD75F-A53F-40AB-BCCC-75CA1B74B91F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB6AD75F-A53F-40AB-BCCC-75CA1B74B91F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3F19433D-7D09-4440-8177-3806B50ACA60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3F19433D-7D09-4440-8177-3806B50ACA60}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3F19433D-7D09-4440-8177-3806B50ACA60}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F19433D-7D09-4440-8177-3806B50ACA60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA6A67EA-CA70-4A2C-B12C-2F5DB4A118AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA6A67EA-CA70-4A2C-B12C-2F5DB4A118AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA6A67EA-CA70-4A2C-B12C-2F5DB4A118AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA6A67EA-CA70-4A2C-B12C-2F5DB4A118AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
