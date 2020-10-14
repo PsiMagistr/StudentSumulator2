@@ -28,20 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.scena = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.scena)).BeginInit();
             this.SuspendLayout();
+            // 
+            // scena
+            // 
+            this.scena.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.scena.Location = new System.Drawing.Point(33, 29);
+            this.scena.Name = "scena";
+            this.scena.Size = new System.Drawing.Size(1057, 530);
+            this.scena.TabIndex = 0;
+            this.scena.TabStop = false;
+            this.scena.Paint += new System.Windows.Forms.PaintEventHandler(this.scena_Paint);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(272, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
             // 
             // Game
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1049, 595);
+            this.ClientSize = new System.Drawing.Size(1139, 595);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.scena);
             this.Name = "Game";
             this.Text = "Game";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Game_FormClosed);
+            ((System.ComponentModel.ISupportInitialize)(this.scena)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.PictureBox scena;
+        private System.Windows.Forms.Button button1;
     }
 }

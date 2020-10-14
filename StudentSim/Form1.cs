@@ -14,7 +14,8 @@ namespace StudentSim
 {
     public partial class FrmRegistration : Form
     {
-        private StudentController studentController;
+        public StudentController studentController;
+        //public int Num = 55;
         private void ListUpdate()
         {
             studentController.Load();
@@ -68,12 +69,18 @@ namespace StudentSim
         {
             if (lstStudents.SelectedIndex >=0 )
             {
-                Game game = new Game(lstStudents.SelectedItem.ToString());
+                var student = studentController.GetStudentByName(lstStudents.SelectedItem.ToString());
+                Game game = new Game(student, studentController.Students);
                 game.Show();
                 this.Hide();
-                game.Owner = this;
-            }
-          
+                game.Owner = this;                
+            }          
+        }
+
+        private void FrmRegistration_Activated(object sender, EventArgs e)
+        {
+            studentController.Load();
+            ListUpdate();
         }
     }
 }

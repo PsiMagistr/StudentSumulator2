@@ -94,6 +94,7 @@
             this.Controls.Add(this.lstStudents);
             this.Name = "FrmRegistration";
             this.Text = "Загрузка";
+            this.Activated += new System.EventHandler(this.FrmRegistration_Activated);
             this.ResumeLayout(false);
             this.PerformLayout();
 

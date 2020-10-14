@@ -10,7 +10,7 @@ namespace StudentLib.Models
     [Serializable]
     public class Student
     {
-        public String Name { get; private set; }
+        public String Name { get;  set; }
         public int Delta { get; set; }
         public Point Position { get; set; } 
         public Student(String name)

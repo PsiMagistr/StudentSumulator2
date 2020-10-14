@@ -11,7 +11,7 @@ namespace StudentLib.Controllers
     [Serializable]
     public class StudentController:Saver
     {
-        public List<Student> Students { get; private set; }
+        public List<Student> Students { get; protected set; }
         public StudentController()
         {
             Load();           
@@ -26,7 +26,7 @@ namespace StudentLib.Controllers
             }
         }
 
-        private void Save()
+        public void Save()
         {
             Save("students.dat", Students);
         }
@@ -53,6 +53,12 @@ namespace StudentLib.Controllers
                 Students.Remove(student);
                 Save();
             }           
+        }
+        public Student GetStudentByName(string name)
+        {
+            Student student;
+            student = Students.SingleOrDefault(s => s.Name == name);
+            return student;
         }
     }
 }

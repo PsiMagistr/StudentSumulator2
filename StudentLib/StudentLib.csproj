@@ -38,6 +38,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -48,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Controllers\CameraController.cs" />
     <Compile Include="Controllers\CityController.cs" />
+    <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\Saver.cs" />
     <Compile Include="Controllers\StudentController.cs" />
     <Compile Include="Models\Camera.cs" />
