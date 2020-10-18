@@ -12,16 +12,24 @@ namespace StudentLib.Models
     {
         public String Name { get;  set; }
         public int Delta { get; set; }
-        public Point Position { get; set; } 
+        public Point Position { get; set; }        
         public Student(String name)
-        {
+        {            
             if (String.IsNullOrEmpty(name))
             {
                 throw new Exception("Имя студента не может быть пустым.");            
             }
             Name = name;
             Delta = 0;
-            Position = new Point(1, 1); 
+            Position = new Point(5, 1);
+        }
+        public void setPosX(int x)
+        {
+            Position = new Point(x, Position.Y);
+        }
+        public void setPosY(int y)
+        {
+            Position = new Point(Position.X, y);
         }
     }
 }

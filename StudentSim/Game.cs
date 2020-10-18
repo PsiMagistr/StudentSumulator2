@@ -23,9 +23,9 @@ namespace StudentSim
            
         }
 
-        public void DrawStudent(Graphics g, Point position, Color color, int otstup, int size)
+        public void DrawStudent(Graphics g, Point Position, Color color, int otstup, int size)
         {
-            g.FillRectangle(new SolidBrush(color), position.X * 20 + 1 * (position.X + 1) + 20 / 2 - size / 2, position.Y * 20 + 1 * (position.Y + 1) + 20 / 2 - size / 2, size, size);
+            g.FillRectangle(new SolidBrush(color), Position.X * 20 + 1 * (Position.X + 1) + 20 / 2 - size / 2, Position.Y * 20 + 1 * (Position.Y + 1) + 20 / 2 - size / 2, size, size);
 
         }
 
@@ -83,7 +83,45 @@ namespace StudentSim
             /*gameController.CurrentStudent.Delta = 0;
             gameController.Save();*/
             gameController.City.VisibleNumbers = true;
-            gameController.setWave(new Point(5, 4));
+            // gameController.setWave(new Point(14, 6));
+            gameController.setWave(new Point(6, 5));
+            scena.Invalidate();
+        }
+
+        private void scena_MouseDown(object sender, MouseEventArgs e)
+        {
+            int Delta = gameController.CurrentStudent.Delta;
+            int X = (e.X /*+ gameController.CurrentStudent.Delta*/) / 21;
+            int Y = e.Y / 21;
+            gameController.City.VisibleNumbers = true;
+            gameController.City[Y, X + Delta].Color = Color.Red;
+            gameController.setWave(new Point(X + Delta, Y));
+            scena.Invalidate();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            gameController.City.VisibleNumbers = true;
+            gameController.CurrentStudent.Delta++;
+            int Delta = gameController.CurrentStudent.Delta;
+            /*for (int y = 1; y < gameController.City.Height -1; y++)
+            {
+                for (int x = 1; x < gameController.CurrentStudent.Delta + 1; x++)
+                {
+                    gameController.City[y, x].Passability = false;
+                    gameController.City[y, x].Color = Color.Red;
+                }
+
+            }*/
+           // gameController.City[1, 2 + Delta].WaveIndex = 1;
+            scena.Invalidate();
+           // MessageBox.Show(gameController.City[gameController.CurrentStudent.Position.Y, gameController.CurrentStudent.Position.X - 1 + gameController.CurrentStudent.Delta].Name);
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            gameController.CurrentStudent.Delta--;
             scena.Invalidate();
         }
     }

@@ -134,7 +134,7 @@
             this.scena.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.scena.Location = new System.Drawing.Point(21, 168);
             this.scena.Name = "scena";
-            this.scena.Size = new System.Drawing.Size(950, 507);
+            this.scena.Size = new System.Drawing.Size(996, 507);
             this.scena.TabIndex = 4;
             this.scena.TabStop = false;
             this.scena.Paint += new System.Windows.Forms.PaintEventHandler(this.scena_Paint);
@@ -212,7 +212,7 @@
             // ListColors
             // 
             this.ListColors.FormattingEnabled = true;
-            this.ListColors.Location = new System.Drawing.Point(993, 168);
+            this.ListColors.Location = new System.Drawing.Point(1037, 168);
             this.ListColors.Name = "ListColors";
             this.ListColors.Size = new System.Drawing.Size(169, 498);
             this.ListColors.TabIndex = 12;

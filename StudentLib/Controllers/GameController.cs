@@ -24,73 +24,76 @@ namespace StudentLib.Controllers
         
         public bool setWave(Point finish)
         {
-            if (City[finish.Y, finish.X].WaveIndex > 0)
+            int Delta = CurrentStudent.Delta;
+            for (int y = 0; y < City.Height; y++)
             {
-                return false;
+                for (int x = 0; x < City.Width; x++)
+                {
+                    City[y, x].WaveIndex = 0; 
+                }
             }
-
             List<Point> satellites = new List<Point>();
             List<Point> temp = new List<Point>();
             int counter = 0;
-            satellites.Add(CurrentStudent.Position);
+            satellites.Add(CurrentStudent.Position);           
             while (satellites.Count > 0)
             {
-                counter++;
+                counter++;                
                 temp.Clear();
                 for (int i = 0; i < satellites.Count; i++)
                 {
-                    if(satellites[i].X + 1 < City.CameraWidth && City[satellites[i].Y, satellites[i].X + 1].Passability == true && City[satellites[i].Y, satellites[i].X + 1].WaveIndex == 0)
+                    Point delta = new Point(satellites[i].X + Delta, satellites[i].Y);
+                    if(satellites[i].X + 1 < City.CameraWidth + Delta && City[delta.Y, delta.X + 1].Passability == true && City[delta.Y, delta.X + 1].WaveIndex == 0)
                     {
                         temp.Add(new Point(satellites[i].X + 1, satellites[i].Y));
-                        City[satellites[i].Y, satellites[i].X + 1].WaveIndex = counter;
-                        if (satellites[i].X + 1 == finish.X && satellites[i].Y == finish.Y)
+                        City[delta.Y, delta.X + 1].WaveIndex = counter /*- Delta*/;
+                        if (delta.X + 1 == finish.X && delta.Y == finish.Y)
                         {
                             City[CurrentStudent.Position.Y, CurrentStudent.Position.X].WaveIndex = 0;
                             return true;
                         }
                     }
 
-                    if (satellites[i].X - 1 > -1 && City[satellites[i].Y, satellites[i].X - 1].WaveIndex == 0 && City[satellites[i].Y, satellites[i].X - 1].Passability == true)
+                    if (satellites[i].X - 1 + Delta > (Delta - 1) && City[delta.Y, delta.X - 1].WaveIndex == 0 && City[delta.Y, delta.X - 1].Passability == true)
                     {
+                        //MessageBox.Show((satellites[0].X).ToString());
                         temp.Add(new Point(satellites[i].X - 1, satellites[i].Y));
-                        City[satellites[i].Y, satellites[i].X - 1].WaveIndex = counter;
-                        if (satellites[i].X - 1 == finish.X && satellites[i].Y == finish.Y)
+                        City[delta.Y, delta.X - 1].WaveIndex = counter;
+                        if (delta.X - 1 == finish.X && delta.Y == finish.Y)
                         {
                             City[CurrentStudent.Position.Y, CurrentStudent.Position.X].WaveIndex = 0;
                             return true;
                         }
                     }
 
-                    if (satellites[i].Y + 1 < City.Height && City[satellites[i].Y + 1, satellites[i].X].WaveIndex == 0 && City[satellites[i].Y + 1, satellites[i].X].Passability == true)
+                    if (satellites[i].Y + 1 < City.Height && City[delta.Y + 1, delta.X].WaveIndex == 0 && City[delta.Y + 1, delta.X].Passability == true)
                     {
                         temp.Add(new Point(satellites[i].X, satellites[i].Y + 1));
-                        City[satellites[i].Y + 1, satellites[i].X].WaveIndex = counter;
-                        if (satellites[i].X == finish.X && satellites[i].Y + 1 == finish.Y)
+                        City[delta.Y + 1, delta.X].WaveIndex = counter;
+                        if (delta.X == finish.X && delta.Y + 1 == finish.Y)
                         {
                             City[CurrentStudent.Position.Y, CurrentStudent.Position.X].WaveIndex = 0;
                             return true;
                         }
                     }
 
-                    if (satellites[i].Y - 1 > -1 && City[satellites[i].Y - 1, satellites[i].X].WaveIndex == 0 && City[satellites[i].Y - 1, satellites[i].X].Passability == true)
+                    if (satellites[i].Y - 1 > -1 && City[delta.Y - 1, delta.X].WaveIndex == 0 && City[delta.Y - 1, delta.X].Passability == true)
                     {
                         temp.Add(new Point(satellites[i].X, satellites[i].Y - 1));
-                        City[satellites[i].Y - 1, satellites[i].X].WaveIndex = counter;
-                        if (satellites[i].X == finish.X && satellites[i].Y - 1 == finish.Y)
+                        City[delta.Y - 1, delta.X].WaveIndex = counter;
+                        if (delta.X == finish.X && delta.Y - 1 == finish.Y)
                         {
                             City[CurrentStudent.Position.Y, CurrentStudent.Position.X].WaveIndex = 0;
                             return true;
                         }
                     }
-
                 }
-                satellites.Clear();
-                for (int j = 0; j < temp.Count; j++)
-                {
-                    satellites.Add(temp[j]);
-                }
-            }
-            MessageBox.Show("g");
+                  satellites.Clear();
+                  for (int j = 0; j < temp.Count; j++)
+                  {
+                      satellites.Add(temp[j]);
+                  }                
+            }           
             return false;
         }        
         
