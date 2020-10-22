@@ -31,5 +31,10 @@ namespace StudentLib.Models
         {
             Position = new Point(Position.X, y);
         }
+
+        public void Move(int x, int y)
+        {
+            Position = new Point(x, y);   
+        }
     }
 }

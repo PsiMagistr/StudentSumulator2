@@ -16,11 +16,13 @@ namespace StudentSim
     public partial class Game : Form
     {
         private GameController gameController;
+        private int counter;
+        private List<Point> P = new List<Point>();
         public Game(Student student, List<Student> students)
         {
             InitializeComponent();
-            gameController = new GameController(student, students);        
-           
+            gameController = new GameController(student, students);
+            //counter = gameController.Path.Count;
         }
 
         public void DrawStudent(Graphics g, Point Position, Color color, int otstup, int size)
@@ -94,15 +96,21 @@ namespace StudentSim
             int X = (e.X /*+ gameController.CurrentStudent.Delta*/) / 21;
             int Y = e.Y / 21;
             gameController.City.VisibleNumbers = true;
-            gameController.City[Y, X + Delta].Color = Color.Red;
-            gameController.setWave(new Point(X + Delta, Y));
+            if (gameController.getPath(new Point(X + Delta, Y)))
+            {
+                counter = gameController.Path.Count;
+                gameController.setColorPath(Color.Red);
+                TM.Enabled = true;
+            }                      
             scena.Invalidate();
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
             gameController.City.VisibleNumbers = true;
             gameController.CurrentStudent.Delta++;
+            gameController.CurrentStudent.setPosX(gameController.CurrentStudent.Position.X - 1);
             int Delta = gameController.CurrentStudent.Delta;
             /*for (int y = 1; y < gameController.City.Height -1; y++)
             {
@@ -122,6 +130,68 @@ namespace StudentSim
         private void button3_Click(object sender, EventArgs e)
         {
             gameController.CurrentStudent.Delta--;
+            scena.Invalidate();
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            
+            Point last = P.Last();
+            var City = gameController.City;
+            if (City[last.Y, last.X].WaveIndex == gameController.City[last.Y, last.X + 1].WaveIndex + 1 && City[last.Y, last.X + 1].Passability == true)
+            {
+                P.Add(new Point(last.X + 1, last.Y));
+                City[last.Y, last.X + 1].Color = Color.Red;
+                scena.Invalidate();
+
+            }
+            else if (gameController.City[last.Y, last.X].WaveIndex == City[last.Y, last.X - 1].WaveIndex + 1 && City[last.Y, last.X - 1].Passability == true)
+            {
+                //MessageBox.Show("2");
+                P.Add(new Point(last.X - 1, last.Y));
+                City[last.Y, last.X - 1].Color = Color.Red;
+                scena.Invalidate();
+                //  MessageBox.Show("2");
+                //City[last.Y, last.X - 1].Color = Color.Yellow;
+            }
+            else if (City[last.Y, last.X].WaveIndex == City[last.Y + 1, last.X].WaveIndex + 1 && City[last.Y + 1, last.X].Passability == true)
+            {
+                // MessageBox.Show("3");
+                P.Add(new Point(last.X, last.Y + 1));
+                City[last.Y + 1, last.X].Color = Color.Red;
+                scena.Invalidate();
+                //   MessageBox.Show("3");
+                // City[last.Y + 1, last.X].Color = Color.Yellow;
+
+            }
+            else if (City[last.Y, last.X].WaveIndex == City[last.Y - 1, last.X].WaveIndex + 1 && City[last.Y - 1, last.X].Passability == true)
+            {
+                P.Add(new Point(last.X, last.Y - 1));
+                City[last.Y - 1, last.X].Color = Color.Red;
+                scena.Invalidate();
+                // MessageBox.Show("4");
+            }
+        }
+       
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            //Point last = gameController.Path.Last();
+            // MessageBox.Show(gameController.City[last.Y, last.X].WaveIndex.ToString());
+            gameController.setWave(new Point(7, 1));
+            P.Add(new Point(7, 1));
+            scena.Invalidate();
+        }
+
+        private void TM_Tick(object sender, EventArgs e)
+        {
+            int Delta = gameController.CurrentStudent.Delta;
+            counter--;           
+            if(counter == 0)
+            {
+                TM.Enabled = false;
+            }
+            gameController.CurrentStudent.Move(gameController.Path[counter].X - Delta, gameController.Path[counter].Y);
             scena.Invalidate();
         }
     }
