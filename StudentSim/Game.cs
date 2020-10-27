@@ -17,6 +17,9 @@ namespace StudentSim
     {
         private GameController gameController;
         private int counter;
+        private int counter2;
+        private bool direction;
+        private bool proverka = true;
         private List<Point> P = new List<Point>();
         public Game(Student student, List<Student> students)
         {
@@ -98,10 +101,17 @@ namespace StudentSim
             gameController.City.VisibleNumbers = true;
             if (gameController.getPath(new Point(X + Delta, Y)))
             {
+                direction = gameController.CurrentStudent.Position.X < X;
+                
+
                 counter = gameController.Path.Count;
+                counter2 = gameController.Path.Count;
+                label1.Text = (0).ToString();
                 gameController.setColorPath(Color.Red);
+                button6.Enabled = true;
                 TM.Enabled = true;
-            }                      
+            }
+            
             scena.Invalidate();
             
         }
@@ -178,20 +188,38 @@ namespace StudentSim
         {
             //Point last = gameController.Path.Last();
             // MessageBox.Show(gameController.City[last.Y, last.X].WaveIndex.ToString());
-            gameController.setWave(new Point(7, 1));
-            P.Add(new Point(7, 1));
+            //gameController.setWave(new Point(7, 1));
+            // P.Add(new Point(7, 1));
+            gameController.CurrentStudent.Delta++;
+            gameController.CurrentStudent.Move(gameController.Path[0].X - gameController.CurrentStudent.Delta, gameController.Path[0].Y);
             scena.Invalidate();
         }
 
         private void TM_Tick(object sender, EventArgs e)
         {
-            int Delta = gameController.CurrentStudent.Delta;
-            counter--;           
+           /* int Delta = gameController.CurrentStudent.Delta;
+            var Path = gameController.Path;
+            counter--;
             if(counter == 0)
             {
                 TM.Enabled = false;
             }
-            gameController.CurrentStudent.Move(gameController.Path[counter].X - Delta, gameController.Path[counter].Y);
+            label1.Text = counter.ToString();
+            gameController.CurrentStudent.Move(Path[counter].X, Path[counter].Y);
+            scena.Invalidate();  */        
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            counter--;
+            var Path = gameController.Path;            
+            if(gameController.CurrentStudent.Position.X >= gameController.City.CameraWidth / 2)
+            {
+               //MessageBox.Show("Jj");
+                //counter++;
+                gameController.CurrentStudent.Delta++;
+            }
+            gameController.CurrentStudent.Move(Path[counter].X - gameController.CurrentStudent.Delta, Path[counter].Y);
             scena.Invalidate();
         }
     }

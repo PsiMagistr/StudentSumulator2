@@ -114,7 +114,7 @@ namespace StudentLib.Controllers
                Path.Add(finish);
                // MessageBox.Show(City[finish.Y, finish.X].WaveIndex.ToString());
                  // City[Path.Last().Y, Path.Last().X].Color = Color.Yellow;
-             while (/*Path.Last().X != CurrentStudent.Position.X + CurrentStudent.Delta || Path.Last().Y != CurrentStudent.Position.Y*/City[Path.Last().Y, Path.Last().X].WaveIndex > 1)
+             while (City[Path.Last().Y, Path.Last().X].WaveIndex > 1)
              {
                Point last = Path.Last();
                if (City[last.Y, last.X].WaveIndex == City[last.Y, last.X + 1].WaveIndex + 1 && City[last.Y, last.X + 1].Passability == true)
@@ -144,7 +144,7 @@ namespace StudentLib.Controllers
                        // MessageBox.Show("4");
                     }
              }
-               // Path.Remove(Path.Last());
+                // Path.Remove(Path.Last());               
                 return true;
             }
             return false;
