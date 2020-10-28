@@ -104,7 +104,7 @@
             // 
             // TM
             // 
-            this.TM.Interval = 1000;
+            this.TM.Interval = 200;
             this.TM.Tick += new System.EventHandler(this.TM_Tick);
             // 
             // label1

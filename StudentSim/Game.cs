@@ -197,18 +197,27 @@ namespace StudentSim
 
         private void TM_Tick(object sender, EventArgs e)
         {
-            counter--;
             var Path = gameController.Path;
-            if (gameController.CurrentStudent.Position.X >= gameController.City.CameraWidth / 2 && gameController.CurrentStudent.Delta < gameController.City.Width - gameController.City.CameraWidth)
+            counter--;            
+            if (direction)
             {
-                gameController.CurrentStudent.Delta++;
+                if (Path[counter].X >= gameController.City.CameraWidth / 2 && gameController.CurrentStudent.Delta < gameController.City.Width - gameController.City.CameraWidth)
+                {
+                    gameController.CurrentStudent.Delta++;
+                }
+            
             }
-            gameController.CurrentStudent.Move(Path[counter].X - gameController.CurrentStudent.Delta, Path[counter].Y);
-            scena.Invalidate();
+            else if (gameController.Path[counter].X - gameController.CurrentStudent.Delta <= gameController.City.CameraWidth / 2 && gameController.CurrentStudent.Delta > 0)
+            {                
+                    gameController.CurrentStudent.Delta--;               
+               
+            }
             if(counter == 0)
             {
                 TM.Enabled = false;
             }
+            gameController.CurrentStudent.Move(Path[counter].X - gameController.CurrentStudent.Delta, Path[counter].Y);
+            scena.Invalidate();
         }
 
         private void button6_Click(object sender, EventArgs e)
